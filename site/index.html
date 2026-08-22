@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>uri-bushey.com</title>
+    <style>
+        body {
+            background-color: black;
+            color: #0f0; /* Green text */
+            font-family: 'Courier New', Courier, monospace; /* Monospace font for terminal feel */
+            text-align: center;
+            padding-top: 20%;
+        }
+        a {
+            color: #0f0;
+            text-decoration: none;
+            margin: 0 10px; /* Space around links */
+        }
+        a:hover {
+            text-decoration: underline;
+        }
+        #links {
+            display: inline-block; /* Align links in a row */
+        }
+
+        #pi {
+            position: fixed; /* Fixed position relative to the viewport */
+            bottom: 10px; /* 10 pixels from the bottom */
+            right: 10px; /* 10 pixels from the right */
+            font-size: 24px; /* Adjust the size of the π symbol as needed */
+            color: #0f0; /* Green text, adjust if needed */
+        }
+    </style>
+</head>
+<body>
+    <h1>Uri Bushey</h1>
+    <div id="links">
+        <a href="https://www.linkedin.com/in/urbushey/" target="_blank">LinkedIn</a> -
+        <a href="https://twitter.com/urbushey" target="_blank">Twitter</a> -
+        <a href="https://github.com/urbushey" target="_blank">GitHub</a> -
+        <a href="/cdn-cgi/l/email-protection#5227203b7c3027213a372b12353f333b3e7c313d3f">Email</a>
+    </div>
+
+    <div id="pi" onclick="randomXKCD()">π</div>
+
+    <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script type="text/javascript">
+        function randomXKCD() {
+            var maxNumber = 2878; // Replace with the latest XKCD number
+            var randomComicNumber = Math.floor(Math.random() * maxNumber) + 1;
+            var xkcdUrl = "https://xkcd.com/" + randomComicNumber + "/";
+            window.open(xkcdUrl, '_blank').focus();
+        }
+    </script>
+</body>
+</html>
