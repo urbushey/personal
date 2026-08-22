@@ -1,40 +1,35 @@
 baseURL = 'https://blog.uri-bushey.com/'
 locale = 'en-us'
 title = 'Uri Bushey'
-theme = 'terminal'
+theme = 'PaperMod'
 
 enableRobotsTXT = true
 buildDrafts = false
+pygmentsUseClasses = true
 
 [pagination]
-  pagerSize = 10
-
-[markup.goldmark.renderer]
-  unsafe = true
+  pagerSize = 20
 
 [params]
   # Sign up at goatcounter.com, then set this to your site code to enable analytics.
   # goatcounter = 'uribushey'
-  contentTypeName = 'posts'
-  showMenuItems = 2
-  fullWidthTheme = false
-  centerTheme = true
+  ShowReadingTime = true
+  ShowShareButtons = false
+  ShowPostNavLinks = true
+  ShowBreadCrumbs = false
+  ShowCodeCopyButtons = true
+  defaultTheme = 'dark'
   description = 'Notes on product, data, and building with AI.'
-  subtitle = 'Notes on product, data, and building with AI.'
-  readMore = 'Read more'
-  readOtherPosts = 'Read other posts'
 
-  [params.logo]
-    logoText = 'Uri Bushey'
-    logoHomeLink = '/'
+  [params.homeInfoParams]
+    Title = 'uri-bushey'
+    Content = "Notes on product, data, and building with AI. Mostly the last one.\n\nThe rest of me lives at [uri-bushey.com](https://uri-bushey.com)."
 
 [[menu.main]]
-  identifier = 'posts'
-  name = 'Posts'
-  url = '/posts'
+  name = 'posts'
+  url = '/posts/'
   weight = 1
 [[menu.main]]
-  identifier = 'main-site'
   name = 'uri-bushey.com'
   url = 'https://uri-bushey.com'
   weight = 2

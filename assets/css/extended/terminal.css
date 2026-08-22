@@ -1,0 +1,208 @@
+/* Terminal-flavoured overrides for PaperMod.
+   Palette and type lifted from panr/hugo-theme-terminal; PaperMod keeps the
+   readable measure and the light/dark toggle. */
+
+@font-face {
+  font-family: 'Fira Code';
+  font-style: normal;
+  font-weight: 300 700;
+  font-display: swap;
+  src: url('/fonts/FiraCode-Latin.woff2') format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA,
+    U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193,
+    U+2212, U+2215, U+FEFF, U+FFFD;
+}
+@font-face {
+  font-family: 'Fira Code';
+  font-style: normal;
+  font-weight: 300 700;
+  font-display: swap;
+  src: url('/fonts/FiraCode-LatinExt.woff2') format('woff2');
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF,
+    U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020,
+    U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+
+:root {
+  --mono: 'Fira Code', Monaco, Consolas, 'Ubuntu Mono', monospace;
+  --radius: 0;
+
+  /* light: warm paper, darkened amber so links clear AA */
+  --theme: #faf8f3;
+  --entry: #fffefb;
+  --primary: #241f14;
+  --secondary: #6b6455;
+  --tertiary: #e7e1d3;
+  --content: #2b2619;
+  --border: #e0d9c8;
+  --code-bg: #f0ece1;
+  --code-block-bg: #1a170f;
+  --accent: #8a6410;
+}
+
+:root[data-theme='dark'] {
+  --theme: #1a170f;
+  --entry: #211d13;
+  --primary: #eceae5;
+  --secondary: #a29a86;
+  --tertiary: #3a3325;
+  --content: #ddd9cf;
+  --border: #35301f;
+  --code-bg: #262114;
+  --code-block-bg: #12100a;
+  --accent: #eec35e;
+}
+
+/* --- type ------------------------------------------------------------- */
+/* Mono for chrome, headings and metadata; body copy stays proportional so
+   long posts still read well on a phone. */
+.header, .nav, #menu, .post-meta, .entry-footer, .footer, .breadcrumbs,
+.pagination, .terms-tags, code, kbd, pre, .archive-year, .archive-month-header,
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--mono);
+}
+
+h1, h2, h3 { letter-spacing: -0.01em; }
+
+.post-content h1, .post-content h2, .post-content h3,
+.post-content h4, .entry-header h1, .post-title {
+  color: var(--accent);
+}
+
+.post-meta, .entry-footer { text-transform: lowercase; }
+
+/* --- links ------------------------------------------------------------ */
+.post-content a,
+.post-content a code {
+  color: var(--accent);
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 3px;
+}
+.post-content a:hover { background: color-mix(in srgb, var(--accent) 20%, transparent); }
+
+/* --- header: amber block logo + striped filler ------------------------ */
+.nav { align-items: center; }
+
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  flex: 1 1 auto;
+  min-width: 0;
+}
+
+.logo a {
+  font-family: var(--mono);
+  font-weight: 700;
+  background: var(--accent);
+  color: var(--theme);
+  padding: 3px 12px;
+  border-radius: 0;
+  white-space: nowrap;
+  flex: 0 0 auto;
+}
+.logo a:hover { filter: brightness(1.08); }
+
+/* the vertical bars Terminal runs alongside its logo */
+.logo::after {
+  content: '';
+  flex: 1 1 auto;
+  min-width: 1.5rem;
+  height: 22px;
+  margin-right: 0.5rem;
+  background-image: repeating-linear-gradient(
+    90deg, var(--accent) 0 2px, transparent 2px 9px);
+  opacity: 0.7;
+}
+
+#menu { flex: 0 0 auto; }
+
+#menu a { color: var(--secondary); }
+#menu a:hover, #menu .active { color: var(--accent); }
+#menu .active { border-bottom: 1px solid var(--accent); }
+
+/* --- home: the terminal moment ---------------------------------------- */
+.home-info.first-entry {
+  background: transparent;
+  border: 0;
+  box-shadow: none;
+  padding-inline: 0;
+  min-height: auto;
+  margin: var(--gap) 0 calc(var(--gap) * 1.2) 0;
+}
+
+.home-info .entry-header h1 {
+  font-family: var(--mono);
+  color: var(--accent);
+  font-size: 2rem;
+  margin-bottom: 0.35em;
+}
+
+.home-info .entry-header h1::before { content: '$ '; opacity: 0.55; }
+
+.home-info .entry-header h1::after {
+  content: '';
+  display: inline-block;
+  width: 0.6em;
+  height: 1.05em;
+  margin-left: 0.15em;
+  vertical-align: -0.15em;
+  background: var(--accent);
+  animation: blink 1.2s steps(1) infinite;
+}
+
+@keyframes blink { 50% { opacity: 0; } }
+@media (prefers-reduced-motion: reduce) {
+  .home-info .entry-header h1::after { animation: none; }
+}
+
+/* Terminal's dotted rule, under the home intro and between list entries */
+.home-info .entry-content { position: relative; padding-bottom: 1.6rem; }
+.home-info .entry-content::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0.4rem;
+  height: 4px;
+  background-image: repeating-linear-gradient(
+    90deg, var(--accent) 0 4px, transparent 4px 8px);
+  opacity: 0.8;
+}
+
+/* --- post list -------------------------------------------------------- */
+.post-entry {
+  background: transparent;
+  border: 0;
+  border-bottom: 1px solid var(--border);
+  border-radius: 0;
+  box-shadow: none;
+  padding: 1.25rem 0;
+  transition: none;
+}
+.post-entry:hover { transform: none; }
+.post-entry:hover .entry-header h2 { text-decoration: underline; }
+.post-entry .entry-header h2 {
+  font-family: var(--mono);
+  color: var(--accent);
+  font-size: 1.3rem;
+}
+.post-entry .entry-content { color: var(--content); }
+.post-entry .entry-footer { color: var(--secondary); }
+
+/* --- code, quotes ----------------------------------------------------- */
+code { border-radius: 0; }
+.post-content pre, .post-content code, .highlight pre { border-radius: 0; }
+
+.post-content blockquote {
+  border-inline-start: 3px solid var(--accent);
+  background: color-mix(in srgb, var(--accent) 8%, transparent);
+  padding: 0.5rem 1rem;
+}
+
+/* --- misc ------------------------------------------------------------- */
+.footer { color: var(--secondary); }
+.footer a { color: var(--accent); }
+.top-link { border-radius: 0; }
+::selection { background: color-mix(in srgb, var(--accent) 45%, transparent); }
