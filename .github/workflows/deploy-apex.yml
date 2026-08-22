@@ -1,0 +1,37 @@
+# Deploys site/ (uri-bushey.com) to DreamHost over SSH.
+# Requires three repo secrets: DH_HOST, DH_USER, DH_SSH_KEY.
+name: Deploy apex site
+
+on:
+  push:
+    branches: [main]
+    paths: ['site/**', '.github/workflows/deploy-apex.yml']
+  workflow_dispatch:
+
+concurrency:
+  group: deploy-apex
+  cancel-in-progress: false
+
+jobs:
+  rsync:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up SSH
+        run: |
+          mkdir -p ~/.ssh
+          printf '%s\n' "${{ secrets.DH_SSH_KEY }}" > ~/.ssh/deploy_key
+          chmod 600 ~/.ssh/deploy_key
+          ssh-keyscan -H "${{ secrets.DH_HOST }}" >> ~/.ssh/known_hosts 2>/dev/null
+
+      - name: Rsync site/ to web root
+        run: |
+          rsync -avz --exclude 'README.md' \
+            -e "ssh -i ~/.ssh/deploy_key -o StrictHostKeyChecking=yes" \
+            site/ "${{ secrets.DH_USER }}@${{ secrets.DH_HOST }}:uri-bushey.com/"
+
+      - name: Verify
+        run: |
+          sleep 3
+          curl -sS -o /dev/null -w 'apex: %{http_code}\n' https://uri-bushey.com/
